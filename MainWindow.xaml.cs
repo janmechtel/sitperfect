@@ -256,8 +256,8 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             double AngleHeadShoulderCenter = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter]));
             double AngleHeadShoulderLeft = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderLeft]));
             this.statusBarText.Text =
-               AngleHeadShoulderCenter.ToString() + " " +
-               AngleHeadShoulderLeft.ToString();
+               "Head-ShoulderLeft: " + AngleHeadShoulderLeft.ToString() + "° \n" +
+               "Head-ShoulderCenter: " + AngleHeadShoulderCenter.ToString() + "° ";
             if (AngleHeadShoulderLeft < 50.0)
             {
                 this.Background = Brushes.Red;
