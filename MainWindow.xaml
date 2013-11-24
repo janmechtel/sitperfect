@@ -1,4 +1,4 @@
-﻿<Window x:Class="Microsoft.Samples.Kinect.SkeletonBasics.MainWindow"
+﻿<Window x:Class="SitPerfect.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SitPerfect" Height="270" Width="250" Loaded="WindowLoaded" Closing="WindowClosing" Topmost="True">

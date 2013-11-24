@@ -4,13 +4,14 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.Samples.Kinect.SkeletonBasics
+namespace SitPerfect
 {
     using System.IO;
     using System.Windows;
     using System.Windows.Media;
     using Microsoft.Kinect;
     using System;
+    using System.Media;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -88,11 +89,21 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
         private bool warningState = false;
 
         /// <summary>
+        /// The SoundPlayer for the warning sound
+        /// </summary>
+        private SoundPlayer player;
+
+
+        /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+            System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
+            System.IO.Stream s = a.GetManifestResourceStream(a.GetName().Name + ".Resources.jaws_x.wav");
+            player = new SoundPlayer(s);
+                
         }
 
         /// <summary>
@@ -268,12 +279,14 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
                 this.warningState = true;
                 this.Background = Brushes.Red;
                 Console.WriteLine(this.warningState);
+                player.Play();
             }
             else if (AngleHeadShoulderLeft >= 50.0 && this.warningState == true)
             {
                 this.warningState = false;
                 this.Background = Brushes.Green;
                 Console.WriteLine(this.warningState);
+                player.Stop();
             }
         }
 

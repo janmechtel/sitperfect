@@ -2,7 +2,7 @@
 using Microsoft.Kinect;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Microsoft.Samples.Kinect.SkeletonBasics
+namespace SitPerfect
 {
     [TestClass]
     public class MainWindowTests
