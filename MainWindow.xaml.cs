@@ -160,6 +160,10 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
 
             if (null != this.sensor)
             {
+                // enable seated mode by default
+                this.checkBoxSeatedMode.IsChecked = true;
+                this.sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
+                
                 // Turn on the skeleton stream to receive skeleton frames
                 this.sensor.SkeletonStream.Enable();
 
