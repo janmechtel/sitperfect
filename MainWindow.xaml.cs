@@ -162,7 +162,6 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             if (null != this.sensor)
             {
                 // enable seated mode by default
-                this.checkBoxSeatedMode.IsChecked = true;
                 this.sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
                 
                 // Turn on the skeleton stream to receive skeleton frames
@@ -256,7 +255,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
         {
             double AngleHeadShoulderCenter = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter]));
             double AngleHeadShoulderLeft = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderLeft]));
-            this.statusBarText2.Text =
+            this.statusBarText.Text =
                AngleHeadShoulderCenter.ToString() + " " +
                AngleHeadShoulderLeft.ToString();
             if (AngleHeadShoulderLeft < 50.0)
@@ -265,6 +264,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             }
             else
             {
+                Console.WriteLine("Good!");
                 this.Background = Brushes.Green;
             }
         }
@@ -397,26 +397,6 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             }
 
             drawingContext.DrawLine(drawPen, this.SkeletonPointToScreen(joint0.Position), this.SkeletonPointToScreen(joint1.Position));
-        }
-
-        /// <summary>
-        /// Handles the checking or unchecking of the seated mode combo box
-        /// </summary>
-        /// <param name="sender">object sending the event</param>
-        /// <param name="e">event arguments</param>
-        private void CheckBoxSeatedModeChanged(object sender, RoutedEventArgs e)
-        {
-            if (null != this.sensor)
-            {
-                if (this.checkBoxSeatedMode.IsChecked.GetValueOrDefault())
-                {
-                    this.sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
-                }
-                else
-                {
-                    this.sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Default;
-                }
-            }
         }
     }
 }
