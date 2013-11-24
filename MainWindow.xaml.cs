@@ -254,10 +254,19 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
 
         private void CalculateAngles(Skeleton skel)
         {
-            this.statusBarText2.Text = 
-                Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter])).ToString() + " " +
-                    Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderLeft])).ToString() + " " +
-                    Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.ShoulderCenter], skel.Joints[JointType.ShoulderLeft])).ToString(); 
+            double AngleHeadShoulderCenter = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter]));
+            double AngleHeadShoulderLeft = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderLeft]));
+            this.statusBarText2.Text =
+               AngleHeadShoulderCenter.ToString() + " " +
+               AngleHeadShoulderLeft.ToString();
+            if (AngleHeadShoulderLeft < 50.0)
+            {
+                this.Background = Brushes.Red;
+            }
+            else
+            {
+                this.Background = Brushes.Green;
+            }
         }
 
         /// <summary>
