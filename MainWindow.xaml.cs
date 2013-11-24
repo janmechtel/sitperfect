@@ -83,6 +83,11 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
         private DrawingImage imageSource;
 
         /// <summary>
+        /// The current state of the warning
+        /// </summary>
+        private bool warningState = false;
+
+        /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
         public MainWindow()
@@ -258,14 +263,17 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             this.statusBarText.Text =
                "Head-ShoulderLeft: " + AngleHeadShoulderLeft.ToString() + "° \n" +
                "Head-ShoulderCenter: " + AngleHeadShoulderCenter.ToString() + "° ";
-            if (AngleHeadShoulderLeft < 50.0)
+            if (AngleHeadShoulderLeft < 50.0 && this.warningState == false)
             {
+                this.warningState = true;
                 this.Background = Brushes.Red;
+                Console.WriteLine(this.warningState);
             }
-            else
+            else if (AngleHeadShoulderLeft >= 50.0 && this.warningState == true)
             {
-                Console.WriteLine("Good!");
+                this.warningState = false;
                 this.Background = Brushes.Green;
+                Console.WriteLine(this.warningState);
             }
         }
 
