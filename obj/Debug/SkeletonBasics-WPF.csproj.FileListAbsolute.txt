@@ -1,6 +1,3 @@
-C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\bin\Debug\SkeletonBasics-WPF.exe
-C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\bin\Debug\SkeletonBasics-WPF.pdb
-C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.csprojResolveAssemblyReference.cache
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\MainWindow.baml
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\MainWindow.g.cs
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\App.g.cs
@@ -8,5 +5,9 @@ C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.g.resources
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\Microsoft.Samples.Kinect.SkeletonBasics.Properties.Resources.resources
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.csproj.GenerateResource.Cache
+C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\bin\Debug\SkeletonBasics-WPF.exe.config
+C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\bin\Debug\SkeletonBasics-WPF.exe
+C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\bin\Debug\SkeletonBasics-WPF.pdb
+C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.csprojResolveAssemblyReference.cache
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.exe
 C:\Users\jmech_000\Documents\Visual Studio 2012\Projects\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.pdb

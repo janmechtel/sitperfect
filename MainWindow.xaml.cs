@@ -10,6 +10,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
     using System.Windows;
     using System.Windows.Media;
     using Microsoft.Kinect;
+    using System;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -232,6 +233,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
                         if (skel.TrackingState == SkeletonTrackingState.Tracked)
                         {
                             this.DrawBonesAndJoints(skel, dc);
+                            this.CalculateAngles(skel);
                         }
                         else if (skel.TrackingState == SkeletonTrackingState.PositionOnly)
                         {
@@ -249,6 +251,38 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
                 this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, RenderWidth, RenderHeight));
             }
         }
+
+        private void CalculateAngles(Skeleton skel)
+        {
+            this.statusBarText2.Text = 
+                Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter])).ToString() + " " +
+                    Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderLeft])).ToString() + " " +
+                    Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.ShoulderCenter], skel.Joints[JointType.ShoulderLeft])).ToString(); 
+        }
+
+        /// <summary>
+        /// Calculates the angle between two joings
+        /// </summary>
+        /// <param name="joint1">The first joint</param>
+        /// <param name="joint2">The second joint</param>
+        public static double CalculateAngleBetweenJoints(Joint joint1, Joint joint2)
+        {
+            return CalculateAngleBetweenTwoPoints(joint1.Position.X, joint1.Position.Y, joint2.Position.X, joint2.Position.Y);
+        }
+
+        /// <summary>
+        /// Calculates the angle between two points
+        /// </summary>
+        /// <param name="X1">The X coordinate of the first point</param>
+        /// <param name="Y1">The Y coordinate of the first point</param>
+        /// <param name="X2">The X coordinate of the second point</param>
+        /// <param name="Y2">The Y coordinate of the second point</param>
+        public static double CalculateAngleBetweenTwoPoints(float X1, float Y1, float X2, float Y2)
+        {
+            return Math.Atan((Y1-Y2)/(X1-X2)) / Math.PI * 180.0;
+        }
+
+
 
         /// <summary>
         /// Draws a skeleton's bones and joints
