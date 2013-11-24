@@ -60,9 +60,9 @@
         <Viewbox Grid.Row="1" Stretch="Uniform" Margin="0,0,0,0">
             <Image Name="Image" Width="640" Height="480"/>
         </Viewbox>
-        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="{x:Null}">
             <StatusBarItem Padding="0 0 0 10">
-                <TextBlock Name="statusBarText" Margin="-1 0 0 0">Click 'Seated' to change skeletal pipeline type!</TextBlock>
+                <TextBlock Name="statusBarText" Margin="-1 0 0 0"></TextBlock>
             </StatusBarItem>
         </StatusBar>
     </Grid>
