@@ -302,12 +302,12 @@ namespace SitPerfect
                 this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, RenderWidth, RenderHeight));
             }
         }
-
         private void CalculateAngles(Skeleton skel)
         {
-            double AngleHeadShoulderCenter = Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter])));
-            double AngleHeadShoulderRight = Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderRight])));
-            double CriticalAngle = 60.0;
+
+            double AngleHeadShoulderCenter = skel.GetAngleHeadShoulderCenter();
+            double AngleHeadShoulderRight = skel.GetAngleHeadShoulderRight();
+            double CriticalAngle = 65.0;
             
             this.statusBarText.Text =
                "Head-ShoulderRight: " + AngleHeadShoulderRight.ToString() + "° \n" +
@@ -328,34 +328,15 @@ namespace SitPerfect
             }
         }
 
-        /// <summary>
-        /// Calculates the angle between two joings
-        /// </summary>
-        /// <param name="joint1">The first joint</param>
-        /// <param name="joint2">The second joint</param>
-        public static double CalculateAngleBetweenJoints(Joint joint1, Joint joint2)
-        {
-            return CalculateAngleBetweenTwoPoints(joint1.Position.X, joint1.Position.Y, joint2.Position.X, joint2.Position.Y);
-        }
-
-        /// <summary>
-        /// Calculates the angle between two points
-        /// </summary>
-        /// <param name="X1">The X coordinate of the first point</param>
-        /// <param name="Y1">The Y coordinate of the first point</param>
-        /// <param name="X2">The X coordinate of the second point</param>
-        /// <param name="Y2">The Y coordinate of the second point</param>
-        public static double CalculateAngleBetweenTwoPoints(float X1, float Y1, float X2, float Y2)
-        {
-            return Math.Atan((Y1-Y2)/(X1-X2)) / Math.PI * 180.0;
-        }
-
-
         private void LogFrame(Skeleton skel) {
             if ((DateTime.Now - lastLogTime).TotalSeconds >= logInterval)
             {
                 lastLogTime = DateTime.Now;
-                log.WriteLine(fastJSON.JSON.ToJSON(new MySkeleton(lastLogTime, skel), new JSONParameters { UseExtensions = false }));
+                string logentry = fastJSON.JSON.ToJSON(new MySkeleton(lastLogTime, skel), new JSONParameters { UseExtensions = false });
+                Console.WriteLine(logentry); 
+                log.WriteLine(logentry);
+                
+                
             }
         }
             
@@ -464,5 +445,39 @@ namespace SitPerfect
 
             drawingContext.DrawLine(drawPen, this.SkeletonPointToScreen(joint0.Position), this.SkeletonPointToScreen(joint1.Position));
         }
+    }
+    public static class SkeletonExtensions
+    {
+        public static double GetAngleHeadShoulderCenter(this Skeleton skel)
+        {
+            return Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter])));
+        }
+        public static double GetAngleHeadShoulderRight(this Skeleton skel)
+        {
+            return Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderRight])));
+        }
+
+        /// <summary>
+        /// Calculates the angle between two joings
+        /// </summary>
+        /// <param name="joint1">The first joint</param>
+        /// <param name="joint2">The second joint</param>
+        public static double CalculateAngleBetweenJoints(Joint joint1, Joint joint2)
+        {
+            return CalculateAngleBetweenTwoPoints(joint1.Position.X, joint1.Position.Y, joint2.Position.X, joint2.Position.Y);
+        }
+
+        /// <summary>
+        /// Calculates the angle between two points
+        /// </summary>
+        /// <param name="X1">The X coordinate of the first point</param>
+        /// <param name="Y1">The Y coordinate of the first point</param>
+        /// <param name="X2">The X coordinate of the second point</param>
+        /// <param name="Y2">The Y coordinate of the second point</param>
+        public static double CalculateAngleBetweenTwoPoints(float X1, float Y1, float X2, float Y2)
+        {
+            return Math.Atan((Y1 - Y2) / (X1 - X2)) / Math.PI * 180.0;
+        }
+
     }
 }

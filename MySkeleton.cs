@@ -25,15 +25,21 @@ namespace SitPerfect
         //     Gets or sets the skeleton's current tracking state.
         public SkeletonTrackingState TrackingState { get; set; }
 
+        public double AngleHeadShoulderCenter;
+        public double AngleHeadShoulderRight;
+
         public DateTime Timestamp { get; set; }
 
         public MySkeleton(DateTime ts, Skeleton skel)
         {
             Timestamp = ts;
-            Joints = skel.Joints;
+            //Joints = skel.Joints;
             Position = skel.Position;
             TrackingId = skel.TrackingId;
             TrackingState = skel.TrackingState;
+            AngleHeadShoulderCenter = skel.GetAngleHeadShoulderCenter();
+            AngleHeadShoulderRight = skel.GetAngleHeadShoulderRight();
+
         }
     }
 }
