@@ -12,6 +12,8 @@ namespace SitPerfect
     using Microsoft.Kinect;
     using System;
     using System.Media;
+    using fastJSON;
+    using System.Text;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -93,6 +95,21 @@ namespace SitPerfect
         /// </summary>
         private SoundPlayer player;
 
+        /// <summary>
+        /// The log file for the event data
+        /// </summary>
+        private StreamWriter log;
+
+
+        /// <summary>
+        /// The interval of logging every X seconds.
+        /// </summary>
+        private int logInterval;
+
+        /// <summary>
+        /// The last time the update log was written
+        /// </summary>
+        private DateTime lastLogTime;
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -102,8 +119,26 @@ namespace SitPerfect
             InitializeComponent();
             System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
             System.IO.Stream s = a.GetManifestResourceStream(a.GetName().Name + ".Resources.jaws_x.wav");
+            
+            string outputDirectory = System.IO.Path.Combine(a.Location, "Output");
+            if (!System.IO.Directory.Exists(outputDirectory))
+            {
+                // Output directory does not exist, so create it.
+                System.IO.Directory.CreateDirectory(outputDirectory);
+            }
+
+            Console.WriteLine(outputDirectory);
+            log = new StreamWriter(outputDirectory + @"\log.txt",true);
+            logInterval = 5;
+            this.Closed += MainWindow_Closed;
+
             player = new SoundPlayer(s);
                 
+        }
+
+        void MainWindow_Closed(object sender, EventArgs e)
+        {
+            log.Close();
         }
 
         /// <summary>
@@ -249,6 +284,7 @@ namespace SitPerfect
                         {
                             this.DrawBonesAndJoints(skel, dc);
                             this.CalculateAngles(skel);
+                            this.LogFrame(skel);
                         }
                         else if (skel.TrackingState == SkeletonTrackingState.PositionOnly)
                         {
@@ -272,6 +308,7 @@ namespace SitPerfect
             double AngleHeadShoulderCenter = Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter])));
             double AngleHeadShoulderRight = Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderRight])));
             double CriticalAngle = 60.0;
+            
             this.statusBarText.Text =
                "Head-ShoulderRight: " + AngleHeadShoulderRight.ToString() + "° \n" +
                "Head-ShoulderCenter: " + AngleHeadShoulderCenter.ToString() + "° ";
@@ -314,7 +351,14 @@ namespace SitPerfect
         }
 
 
-
+        private void LogFrame(Skeleton skel) {
+            if ((DateTime.Now - lastLogTime).TotalSeconds >= logInterval)
+            {
+                lastLogTime = DateTime.Now;
+                log.WriteLine(fastJSON.JSON.ToJSON(new MySkeleton(lastLogTime, skel), new JSONParameters { UseExtensions = false }));
+            }
+        }
+            
         /// <summary>
         /// Draws a skeleton's bones and joints
         /// </summary>
