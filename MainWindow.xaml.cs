@@ -120,7 +120,7 @@ namespace SitPerfect
             System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
             System.IO.Stream s = a.GetManifestResourceStream(a.GetName().Name + ".Resources.jaws_x.wav");
             
-            string outputDirectory = System.IO.Path.Combine(a.Location, "Output");
+            string outputDirectory = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(a.Location), "Output");
             if (!System.IO.Directory.Exists(outputDirectory))
             {
                 // Output directory does not exist, so create it.
