@@ -269,19 +269,20 @@ namespace SitPerfect
 
         private void CalculateAngles(Skeleton skel)
         {
-            double AngleHeadShoulderCenter = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter]));
-            double AngleHeadShoulderLeft = Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderLeft]));
+            double AngleHeadShoulderCenter = Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderCenter])));
+            double AngleHeadShoulderRight = Math.Abs(Math.Round(CalculateAngleBetweenJoints(skel.Joints[JointType.Head], skel.Joints[JointType.ShoulderRight])));
+            double CriticalAngle = 60.0;
             this.statusBarText.Text =
-               "Head-ShoulderLeft: " + AngleHeadShoulderLeft.ToString() + "° \n" +
+               "Head-ShoulderRight: " + AngleHeadShoulderRight.ToString() + "° \n" +
                "Head-ShoulderCenter: " + AngleHeadShoulderCenter.ToString() + "° ";
-            if (AngleHeadShoulderLeft < 50.0 && this.warningState == false)
+            if (AngleHeadShoulderRight < CriticalAngle && this.warningState == false)
             {
                 this.warningState = true;
                 this.Background = Brushes.Red;
                 Console.WriteLine(this.warningState);
                 player.Play();
             }
-            else if (AngleHeadShoulderLeft >= 50.0 && this.warningState == true)
+            else if (AngleHeadShoulderRight >= CriticalAngle && this.warningState == true)
             {
                 this.warningState = false;
                 this.Background = Brushes.Green;
