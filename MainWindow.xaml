@@ -4,6 +4,7 @@
         Title="SitPerfect" Height="270" Width="250" Loaded="WindowLoaded" Closing="WindowClosing" Topmost="True">
 
     <Window.Resources>
+        
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e"/>
         <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f"/>
         <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2"/>
@@ -50,11 +51,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Viewbox Grid.Row="0" Stretch="Uniform" Margin="0,0,0,0">
             <Image Name="Image" Width="640" Height="480"/>
         </Viewbox>
-        <StatusBar Grid.Row="1" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="{x:Null}">
+        <Button Grid.Row="1" Name="buttonPause" Click="buttonPause_Click">
+            Pause
+        </Button>
+        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="{x:Null}">
             <StatusBarItem Padding="0 0 0 10">
                 <TextBlock Name="statusBarText" Margin="-1 0 0 0">Skeleton not tracked yet.</TextBlock>
             </StatusBarItem>

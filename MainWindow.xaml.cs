@@ -91,6 +91,12 @@ namespace SitPerfect
         private bool warningState = false;
 
         /// <summary>
+        /// The current state of pausing for the logger and sound
+        /// </summary>
+        private bool pauseState = false;
+
+
+        /// <summary>
         /// The SoundPlayer for the warning sound
         /// </summary>
         private SoundPlayer player;
@@ -317,7 +323,10 @@ namespace SitPerfect
                 this.warningState = true;
                 this.Background = Brushes.Red;
                 Console.WriteLine(this.warningState);
-                player.Play();
+                if (false == pauseState)
+                {
+                    player.Play();
+                }
             }
             else if (AngleHeadShoulderRight >= CriticalAngle && this.warningState == true)
             {
@@ -444,6 +453,20 @@ namespace SitPerfect
             }
 
             drawingContext.DrawLine(drawPen, this.SkeletonPointToScreen(joint0.Position), this.SkeletonPointToScreen(joint1.Position));
+        }
+
+        private void buttonPause_Click(object sender, RoutedEventArgs e)
+        {
+            if (true == pauseState)
+            {
+                pauseState = false;
+            }
+            else
+            {
+                pauseState = true;
+                player.Stop();
+            }
+            Console.WriteLine(pauseState);
         }
     }
     public static class SkeletonExtensions
