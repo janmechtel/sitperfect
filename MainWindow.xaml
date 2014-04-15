@@ -1,10 +1,12 @@
 ﻿<Window x:Class="SitPerfect.MainWindow"
+        xmlns:local="clr-namespace:SitPerfect"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SitPerfect" Height="270" Width="250" Loaded="WindowLoaded" Closing="WindowClosing" Topmost="True">
 
     <Window.Resources>
-        
+
+        <local:BoolToStringConverter x:Key="BooleanToStringConverter" FalseValue="No" TrueValue="Yes" />
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e"/>
         <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f"/>
         <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2"/>
@@ -57,7 +59,7 @@
             <Image Name="Image" Width="640" Height="480"/>
         </Viewbox>
         <Button Grid.Row="1" Name="buttonPause" Click="buttonPause_Click">
-            Pause
+            <TextBlock Text="{Binding Path=pauseState, Converter={StaticResource BooleanToStringConverter}}" />
         </Button>
         <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="{x:Null}">
             <StatusBarItem Padding="0 0 0 10">
