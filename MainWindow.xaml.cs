@@ -14,11 +14,12 @@ namespace SitPerfect
     using System.Media;
     using fastJSON;
     using System.Text;
+    using System.ComponentModel;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         /// <summary>
         /// Width of output drawing
@@ -93,7 +94,30 @@ namespace SitPerfect
         /// <summary>
         /// The current state of pausing for the logger and sound
         /// </summary>
-        private bool pauseState = false;
+        private bool _pauseState = false;
+        
+        public bool pauseState
+        {
+            get { return _pauseState; }
+            set
+            {
+                if (_pauseState == value) return;
+                _pauseState = value;
+                RaisePropertyChanged("pauseState");
+            }
+        }
+
+        private string _statusBarText = "Skeleton not tracked yet.";
+        public string statusBarText
+        {
+            get { return _statusBarText; }
+            set
+            {
+                if (_statusBarText == value) return;
+                _statusBarText = value;
+                RaisePropertyChanged("statusBarText");
+            }
+        }
 
 
         /// <summary>
@@ -117,12 +141,21 @@ namespace SitPerfect
         /// </summary>
         private DateTime lastLogTime;
 
+        // http://stackoverflow.com/questions/626613/wpf-event-property-changed
+        //http://stackoverflow.com/questions/6789236/how-does-wpf-inotifypropertychanged-work
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
             System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
             System.IO.Stream s = a.GetManifestResourceStream(a.GetName().Name + ".Resources.jaws_x.wav");
             
@@ -240,7 +273,7 @@ namespace SitPerfect
 
             if (null == this.sensor)
             {
-                this.statusBarText.Text = Properties.Resources.NoKinectReady;
+                statusBarText = Properties.Resources.NoKinectReady;
             }
         }
 
@@ -315,7 +348,7 @@ namespace SitPerfect
             double AngleHeadShoulderRight = skel.GetAngleHeadShoulderRight();
             double CriticalAngle = 65.0;
             
-            this.statusBarText.Text =
+            statusBarText =
                "Head-ShoulderRight: " + AngleHeadShoulderRight.ToString() + "° \n" +
                "Head-ShoulderCenter: " + AngleHeadShoulderCenter.ToString() + "° ";
             if (AngleHeadShoulderRight < CriticalAngle && this.warningState == false)
@@ -460,11 +493,14 @@ namespace SitPerfect
             if (true == pauseState)
             {
                 pauseState = false;
+                this.buttonPause.Content = "Pause";
             }
             else
             {
                 pauseState = true;
                 player.Stop();
+                this.buttonPause.Content = "Unpause";
+                
             }
             Console.WriteLine(pauseState);
         }

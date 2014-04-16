@@ -6,7 +6,6 @@
 
     <Window.Resources>
 
-        <local:BoolToStringConverter x:Key="BooleanToStringConverter" FalseValue="No" TrueValue="Yes" />
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e"/>
         <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f"/>
         <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2"/>
@@ -59,11 +58,25 @@
             <Image Name="Image" Width="640" Height="480"/>
         </Viewbox>
         <Button Grid.Row="1" Name="buttonPause" Click="buttonPause_Click">
-            <TextBlock Text="{Binding Path=pauseState, Converter={StaticResource BooleanToStringConverter}}" />
+            <TextBlock>
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=pauseState}" Value="True">
+                                <Setter Property="Text" Value="Pause" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=pauseState}" Value="False">
+                                <Setter Property="Text" Value="Unpause " />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </Button>
+        
         <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="{x:Null}">
             <StatusBarItem Padding="0 0 0 10">
-                <TextBlock Name="statusBarText" Margin="-1 0 0 0">Skeleton not tracked yet.</TextBlock>
+                <TextBlock Text="{Binding Path=statusBarText}" Margin="-1 0 0 0"></TextBlock>
             </StatusBarItem>
         </StatusBar>
     </Grid>
